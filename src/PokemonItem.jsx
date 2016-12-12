@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 
-
 class PokemonItem extends Component {
   render(){
     const {pokemonName, photoURL} = this.props;

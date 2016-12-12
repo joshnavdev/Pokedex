@@ -1,47 +1,9 @@
+/* eslint-disable */
 import React, { Component } from 'react';
 import superagent from 'superagent';
+import PokemonItem from './PokemonItem';
+import PokemonList from './PokemonList';
 
-//import pokemons from './data.json';
-class PokemonItem extends Component {
-  render(){
-    const {pokemonName, photoURL} = this.props;
-
-    return (
-      <li>
-        <img src={photoURL}/>
-        <span>{pokemonName}</span>
-
-      </li>
-    );
-  }
-}
-
-class PokemonList extends Component{
-  render(){
-    const {pokemons} = this.props;
-    let lastName = '';
-
-    return (
-      <ul id="list">
-        {
-          pokemons.map((pokemon, idx) =>{
-            if(lastName == pokemon.name){
-              return null;
-            }
-            lastName = pokemon.name;
-            return(
-              <PokemonItem 
-              key = {idx}
-              pokemonName={pokemon.name}
-              photoURL={pokemon.ThumbnailImage}
-              />
-            );
-          })
-        }
-      </ul>
-    );  
-  }
-}
 
 class App extends Component{
   constructor(props){
@@ -59,8 +21,7 @@ class App extends Component{
 
   componentDidMount(){
     console.log('RENDERED');
-    superagent.get('http://localhost:8080/get-pokemons')
-    .end((err,res) => {
+    superagent.get('http://192.168.1.36:8080/get-pokemons').end((err,res) => {
       console.log(res.body);
       this.setState({
         pokemonData: res.body
@@ -73,7 +34,7 @@ class App extends Component{
     const {pokemonData} = this.state;
     let pokemonFilter;
 
-    pokemonFilter = pokemonData.filter(pokemon =>
+    pokemonFilter = pokemonData.filter(pokemon => 
       !!~pokemon.name.toLowerCase().indexOf(pokemonName)
     );
 
